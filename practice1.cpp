@@ -5,13 +5,16 @@
 
 int main()              // 2. 程序入口
 {
-    float c,a;              // 3. 声明一个整数变量
-    std::cin >> c;      //    从键盘读入，存进 c
-    a = c * 9 / 5 + 32;
-    // 你的计算写在这里
+    int total;                       // 总秒数
+    std::cin >> total;
 
-    std::cout << a;  // 4. 输出
+    int h, m, s;                     // 时、分、秒
+    h = total / 3600;
+    m = total % 3600 / 60;
+    s = total - (h * 3600) - (m * 60);
+    // 用 / 和 % 把它们算出来
 
+    std::cout << h << "小时" << m << "分" << s << "秒";
     return 0;           //    告诉系统"正常结束"
 }
 
