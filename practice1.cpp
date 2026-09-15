@@ -1,11 +1,18 @@
 ﻿// practice1.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
 //
 
-#include <iostream>
+#include <iostream>     // 1. 引入输入输出库
 
-int main(void)
+int main()              // 2. 程序入口
 {
-    
+    float c,a;              // 3. 声明一个整数变量
+    std::cin >> c;      //    从键盘读入，存进 c
+    a = c * 9 / 5 + 32;
+    // 你的计算写在这里
+
+    std::cout << a;  // 4. 输出
+
+    return 0;           //    告诉系统"正常结束"
 }
 
 // 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单
