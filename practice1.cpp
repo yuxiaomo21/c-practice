@@ -5,17 +5,15 @@
 
 int main()              // 2. 程序入口
 {
-    int year;
-    std::cin >> year;
-
-    if ((year%4==0&&year%100!=0)||year%400==0 ) 
-    {
-        std::cout << "闰年";
-    }
-    else {
-        std::cout << "平年";
-    }
-    return 0;           //    告诉系统"正常结束"
+	for (int i = 1; i <= 9; i++)
+	{        // 外层：控制"行"
+		for (int j = 1; j <= i; j++)
+		{			// 内层：控制"这一行里的第几个"
+			std::cout << j << "*" << i << "=" << i * j<<"\t"; // 打印一个算式
+		}
+		std::cout << "\n";                 // 一行打完了，换行！
+	}
+	return 0;           //    告诉系统"正常结束"
 }
 
 // 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单
