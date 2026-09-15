@@ -5,16 +5,16 @@
 
 int main()              // 2. 程序入口
 {
-    int total;                       // 总秒数
-    std::cin >> total;
+    int year;
+    std::cin >> year;
 
-    int h, m, s;                     // 时、分、秒
-    h = total / 3600;
-    m = total % 3600 / 60;
-    s = total - (h * 3600) - (m * 60);
-    // 用 / 和 % 把它们算出来
-
-    std::cout << h << "小时" << m << "分" << s << "秒";
+    if ((year%4==0&&year%100!=0)||year%400==0 ) 
+    {
+        std::cout << "闰年";
+    }
+    else {
+        std::cout << "平年";
+    }
     return 0;           //    告诉系统"正常结束"
 }
 
