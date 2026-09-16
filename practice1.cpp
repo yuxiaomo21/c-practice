@@ -1,36 +1,34 @@
-﻿#include<iostream>
-#include<string>
-#include<cctype>
+﻿#include <iostream>
+#include <string>
+struct Student
+{
+	std::string name;
+	int score;
+};//定义一个学生结构体，包含姓名和成绩两个成员变量
 int main()
 {
-	std::string s;//初始化字符串
-	std::getline(std::cin, s);
-	int total = (int)s.length();//获取字符串长度
-	int alpha = 0, digit = 0, space = 0, other = 0;
-	for (int i = 0; i < (int)s.length(); i++)
+	int n;
+	std::cin >> n;
+	Student list[100];
+	for (int i = 0; i < n; i++)
 	{
-		char c = s[i];
-		if (std::isalpha(c))
+		std::cin >> list[i].name >> list[i].score;
+	}
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n - 1; j++)
 		{
-			alpha++;
-		}
-		else if (std::isdigit(c))
-		{
-			digit++;
-		}
-		else if (std::isspace(c))
-		{
-			space++;
-		}
-		else
-		{
-			other++;
+			if (list[j].score < list[j + 1].score)
+			{
+				Student  temp = list[j];
+				list[j] = list[j + 1];
+				list[j + 1] = temp;
+			}
 		}
 	}
-	std::cout << total << "\n";
-	std::cout << alpha << "\n";
-	std::cout << digit << "\n";
-	std::cout << space << "\n";
-	std::cout << other << "\n";
+	for (int i = 0; i < n; i++)
+	{
+		std::cout << list[i].name << " " << list[i].score << "\n";
+	}
 	return 0;
 }
