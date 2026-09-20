@@ -1,23 +1,24 @@
 ﻿#include <iostream>
 #include <string>
 #include <fstream>
+#include<vector>
+#include<algorithm>
 struct Student
 {
 	std::string name;
 	int score;
 };
+bool compraeByScore(const Student& a, const Student& b)
+{
+	return a.score > b.score;//如果a大于b则返回的为ture，所以能够降序排序
+}
 class StudentList
 {
 public:
-	void add();
-	void show();
-	void sort();
-	void stats();
-	void save();
-	void load();
+	void add(); void show(); void sort();
+	void stats(); void save(); void load();
 private:
-	Student list[100];
-	int count = 0;
+	std::vector<Student>list;
 };
 void showMenu()
 {
@@ -33,51 +34,37 @@ void showMenu()
 }
 void StudentList::add()
 {
-	std::cin >> list[count].name;
-	std::cin >> list[count].score;
-	count++;
+	Student s;
+	std::cin >> s.name;
+	std::cin >> s.score;
+	list.push_back(s);
 	std::cout << "已添加\n";
 }
 void StudentList::show()
 {
-	for (int i = 0; i < count; i++)
+	for (const Student& s : list)
 	{
-		std::cout << list[i].name << " " << list[i].score << "\n";
+		std::cout << s.name << " " << s.score << "\n";
 	}
 }
 void StudentList::sort()
 {
-	for (int i = 0; i < count; i++)
-	{
-		for (int j = 0; j < count - i - 1; j++)
-		{
-			if (list[j].score < list[j + 1].score)
-			{
-				Student temp = list[j];
-				list[j] = list[j + 1];
-				list[j + 1] = temp;
-			}
-		}
-	}
+	std::sort(list.begin(), list.end(), compraeByScore);
 	std::cout << "排序完成\n";
 }
-void StudentList::stats ()
+void StudentList::stats()
 {
-	double avg = 2, mn = list[0].score, sum = 0;
-	double mx = list[0].score;
-	for (int i = 0; i < count; i++)
+	double  sum = 0;
+	int mx = list[0].score, mn = list[0].score;
+	if (list.empty()) { std::cout << "暂无学生\n"; return; }
+	for (Student& s : list)//遍历list，其实约等于之前的const
 	{
-		if (list[i].score > mx) mx = list[i].score;
-		if (list[i].score < mn) mn = list[i].score;
+		if (s.score > mx) mx = s.score;
+		if (s.score < mn) mn = s.score;
+		sum += s.score;
 	}
-	for (int i = 0; i < count; i++)
-	{
-		sum += list[i].score;
-	}
-	if (count == 0) { std::cout << "暂无学生\n"; return; }
-	avg = sum / count;
-	std::cout << "人数: " << count << "\n";
-	std::cout << "平均分: " << avg << "\n";
+	std::cout << "人数: " << list.size() << "\n";
+	std::cout << "平均分: " << sum / list.size() << "\n";
 	std::cout << "最高分: " << mx << "\n";
 	std::cout << "最低分: " << mn << "\n";
 }
@@ -89,12 +76,12 @@ void StudentList::save()
 		std::cout << "无法写入文件\n";
 		return;
 	}
-	for (int i = 0; i < count; i++)
+	for (Student& s : list)
 	{
-		fout << list[i].name << " " << list[i].score << "\n";
+		fout << s.name << " " << s.score << "\n";
 	}
 	fout.close();
-	std::cout << "已保存/n";
+	std::cout << "已保存\n";
 }
 void StudentList::load()
 {
@@ -104,13 +91,14 @@ void StudentList::load()
 		std::cout << "文件不存在或无法打开\n";
 		return;
 	}
-	count = 0;
-	while (count<100 && fin >> list[count].name >> list[count].score)//不断读取，直到文件结束或数组满
+	list.clear();
+	Student s;
+	while (fin >> s.name >> s.score)//不断读取，直到文件结束或数组满
 	{
-		count++;
+		list.push_back(s);
 	}
 	fin.close();
-	std::cout << "已读取" << count << "条\n";
+	std::cout << "已读取" << list.size() << "条\n";
 }
 int main()
 {
