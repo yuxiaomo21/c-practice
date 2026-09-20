@@ -41,3 +41,6 @@ out/
 *.tmp
 Thumbs.db
 desktop.ini
+
+# ---------- 程序运行时产生的数据 ----------
+students.txt
