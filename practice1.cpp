@@ -1,16 +1,16 @@
 ﻿#include <iostream>
 #include <string>
 #include <fstream>
-#include<vector>
+#include <vector>
 #include<algorithm>
 struct Student
 {
 	std::string name;
 	int score;
 };
-bool compraeByScore(const Student& a, const Student& b)
+bool compareByScore(const Student& a, const Student& b)
 {
-	return a.score > b.score;//如果a大于b则返回的为ture，所以能够降序排序
+	return a.score > b.score; //如果a大于b则返回的为ture，所以能够降序排序
 }
 class StudentList
 {
@@ -18,7 +18,7 @@ public:
 	void add(); void show(); void sort();
 	void stats(); void save(); void load();
 private:
-	std::vector<Student>list;
+	std::vector <Student> list;
 };
 void showMenu()
 {
@@ -49,15 +49,15 @@ void StudentList::show()
 }
 void StudentList::sort()
 {
-	std::sort(list.begin(), list.end(), compraeByScore);
+	std::sort(list.begin(), list.end(), compareByScore);
 	std::cout << "排序完成\n";
 }
 void StudentList::stats()
 {
+	if (list.empty()) { std::cout << "暂无学生\n"; return; } //在vector下刚开始没有[0],不放第一位会出错
 	double  sum = 0;
 	int mx = list[0].score, mn = list[0].score;
-	if (list.empty()) { std::cout << "暂无学生\n"; return; }
-	for (Student& s : list)//遍历list，其实约等于之前的const
+	for (const Student& s : list) //遍历list，其实约等于之前的count
 	{
 		if (s.score > mx) mx = s.score;
 		if (s.score < mn) mn = s.score;
@@ -76,7 +76,7 @@ void StudentList::save()
 		std::cout << "无法写入文件\n";
 		return;
 	}
-	for (Student& s : list)
+	for (const Student& s : list)
 	{
 		fout << s.name << " " << s.score << "\n";
 	}
