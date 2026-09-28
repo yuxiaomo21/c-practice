@@ -1,36 +1,60 @@
 ﻿#include <iostream>
-int factorial(int n)
+struct Node
 {
-	if (n <= 1) return 1;
-	return n * factorial(n - 1);
-}
-
-int fibonacci(int n)
-{
-	if (n <= 1) return n;
-	return fibonacci(n - 1) + fibonacci(n - 2);
-}
-
-int hanoiSteps = 0;
-
-void hanoi(int n, char  from, char to, char via)
-{
-	if (n == 0) return;
-	hanoi(n - 1, from, via, to);
-	std::cout << from <<" -> " << to << "\n";
-	hanoiSteps++;
-	hanoi(n - 1, via, to, from);
-}
+	int value;
+	Node* next;
+};
 int main()
 {
 	int n = 0;
 	std::cin >> n;
-
-	std::cout << "阶乘: " << factorial(n) << "\n";
-	std::cout << "斐波那契: " << fibonacci(n) << "\n";
-	std::cout << "汉诺塔:\n";
-	hanoi(n, 'A', 'C', 'B');
-	std::cout << "共 " << hanoiSteps << " 步\n";
-	return 0;
+	Node* head = nullptr;
+	Node* tail = nullptr;
+	for (int i = 0; i < n; i++)
+	{
+		int v = 0;
+		std::cin >> v;
+		Node* p = new Node;
+		p->value = v;
+		p->next = nullptr;
+		if (head == nullptr)
+		{
+			head = tail = p;
+		}
+		else
+		{
+			tail->next = p;
+			tail = p;
+		}
+	}
+	std::cout << "原始: ";
+	int sum = 0;
+	for (Node* p = head; p != nullptr; p = p->next)
+	{
+		std::cout << p->value << " ";
+		sum += p->value;
+	}
+	std ::cout << "\n" << "总和" << sum << "\n";
+	Node* pre = nullptr, * now = head;
+	while (now != nullptr)
+	{
+		Node* next = now->next;
+		now->next = pre;
+		pre = now;
+		now = next;
+	}
+	head = pre;
+	std::cout << "反转：";
+	for (Node* p = head; p != nullptr; p = p->next)
+	{
+		std::cout << p->value << " ";
+	}
+	std::cout << "\n";
+	Node* p = head;
+	while (p != nullptr)
+	{
+		Node* next = p->next;    
+		delete p;                
+		p = next;                
+	}
 }
-
